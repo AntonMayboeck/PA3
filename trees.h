@@ -3,31 +3,18 @@
 #include <map>
 using namespace std;
 
-class DataClass {
-public:
-	DataClass(char chara, string Numer);
-private:
-	char chara;
-	string Number;
-};
-
 class Node {
 public:
-	Node(DataClass* data = NULL, Node* left = NULL, Node* right = NULL);
+	Node(char chara, int Number, Node* left = NULL, Node* right = NULL);
 	virtual ~Node();
-	void encode();
-	void decode();
-	void hasLeaf();
-	void counter(map eva, string hello);
-
-
-private:
-	DataClass* data;
-	Node* left;
-
+	void encode(Node* node, string str, map<char, int> &dict);
+	void decode(Node* node, int& index, string str);
+	void hasLeaf(Node *root);
+	void counter();
 
 private:
-	DataClass dc;
+	char chara;
+	int Number;
 	Node *left;
 	Node* right;
 

@@ -15,25 +15,16 @@ int main() {
 	string hello((istreambuf_iterator<char>(os)),
 		(istreambuf_iterator<char>()));
 
-	map<char, int> eva;
+	map<char, char> eva;
+	eva['a'] = '4';
 	//call counter HERE!
 
-
-	for (int i = 0; i < hello.size(); i++) {
-		//map<char, int>::iterator it = eva.find(hello[i]);
-		if (hello[i] == '\n') {
-			continue;
-		}
-		else if (eva.count(hello[i])) {
-			eva[hello[i]]++;
-		}
-		else {
-			eva[hello[i]] = 1;
-		}
-	}
 	//cout << hello;
 	//cout << count;
-	for (const auto& p : eva) {
-		cout << p.first << ": " << p.second << endl; // "Karl", "George"
-	}
+	//for (const auto& p : eva) {
+	//	cout << p.first << ": " << p.second << endl; // "Karl", "George"
+	//}
+	string helo = "";
+
+
 }

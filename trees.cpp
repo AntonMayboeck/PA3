@@ -7,17 +7,24 @@
 using namespace std;
 
 
-Node::Node(DataClass* data, Node* left, Node* right) {
-	this->data = data;
+struct compare
+{
+	bool operator()(Node *left, Node* right){
+		return left->Number > right->Number;
+	}
+};
+
+
+Node::Node(char character = NULL, int num = NULL, Node* left, Node* right) {
 	this->left = left;
 	this->right = right;
-}
-
-
-DataClass::DataClass(char character, string BinaryNumber) {
 	this->chara = character;
-	this->Number = BinaryNumber;
+	this->Number = num;
 }
+Node::hasLeaf(Node *root) {
+	return root->left == nullptr && root->right == nullptr;
+}
+
 
 Node::~Node() {
 	delete data;
@@ -25,7 +32,48 @@ Node::~Node() {
 	delete right;
 }
 
-Node::encode() {
+Node::encode(Node *root, string str, map<chara, count> &dict) {
+
+	if (root == nullptr) {
+		return;
+	}
+
+	if (hasLeaf(root)) {
+		if (str == "") {
+			dict[root->chara] = '1';
+		}
+		else {
+			dict[root->chara] = str;
+		}
+		
+	}
+
+	if (root->left != nullptr) {
+		encode(root->left, str + '0', dict)
+	}
+	if (root->right != nullptr) {
+		encode(root->right, str + '0', dict)
+	}
+
+}
+
+Node::encode(Node *node, int &index, string str) {
+	if (root == nullptr) {
+		return;
+	}
+
+	if (hasLeaf(root)) {
+		cout << node->chara << endl;
+
+	}
+	index++;
+
+	if (str[index] == '0') {
+		decode(root->left, index, str);
+	}
+	else {
+		decode(root->right, index, str);
+	}
 }
 
 Node::counter() {
@@ -41,4 +89,16 @@ Node::counter() {
 			eva[hello[i]] = 1;
 		}
 	}
+}
+
+Node::createHuffmann(string theText) {
+
+	if (theText == "") {
+		cout << "The File is empty!" << endl;
+	}
+
+	priority_queue<Node*, vector<Node*>, compare > queue;
+
+
+
 }
