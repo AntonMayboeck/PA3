@@ -8,17 +8,24 @@
 using namespace std;
 
 
-Node::Node(DataClass* data, Node* left, Node* right) {
-	this->data = data;
+struct compare
+{
+	bool operator()(Node *left, Node* right){
+		return left->Number > right->Number;
+	}
+};
+
+
+Node::Node(char character = NULL, int num = NULL, Node* left, Node* right) {
 	this->left = left;
 	this->right = right;
-}
-
-
-DataClass::DataClass(char character, string BinaryNumber) {
 	this->chara = character;
-	this->Number = BinaryNumber;
+	this->Number = num;
 }
+Node::hasLeaf(Node *root) {
+	return root->left == nullptr && root->right == nullptr;
+}
+
 
 Node::~Node() {
 	delete data;
@@ -26,21 +33,51 @@ Node::~Node() {
 	delete right;
 }
 
-// Node::encode() {
-// }
+Node::encode(Node *root, string str, map<chara, count> &dict) {
+
+	if (root == nullptr) {
+		return;
+	}
+
+	if (hasLeaf(root)) {
+		if (str == "") {
+			dict[root->chara] = '1';
+		}
+		else {
+			dict[root->chara] = str;
+		}
+		
+	}
+
+	if (root->left != nullptr) {
+		encode(root->left, str + '0', dict)
+	}
+	if (root->right != nullptr) {
+		encode(root->right, str + '0', dict)
+	}
+
+}
+
+Node::decode(Node *node, int &index, string str) {
+	if (root == nullptr) {
+		return;
+	}
+
+	if (hasLeaf(root)) {
+		cout << node->chara << endl;
+
+	}
+	index++;
+
+	if (str[index] == '0') {
+		decode(root->left, index, str);
+	}
+	else {
+		decode(root->right, index, str);
+	}
+}
 
 Node::counter(map<char, int> eva, string hello) {
-
-	ifstream os;
-	int count = 0;
-
-	os.open("test.txt");
-	string hello((istreambuf_iterator<char>(os)),
-		(istreambuf_iterator<char>()));
-
-	map<char, int> eva;
-	//call counter HERE!
-
 	for (int i = 0; i < hello.size(); i++) {
 		//map<char, int>::iterator it = eva.find(hello[i]);
 		if (hello[i] == '\n') {
@@ -53,4 +90,28 @@ Node::counter(map<char, int> eva, string hello) {
 			eva[hello[i]] = 1;
 		}
 	}
+}
+
+Node::createHuffmann(string theText) {
+
+	if (theText == "") {
+		cout << "The File is empty!" << endl;
+	}
+
+	priority_queue<Node*, vector<Node*>, compare > queue;
+	map<char, int> eva;
+	counter(eva, theText);
+
+
+	while (!node_queue.empty()) {
+		left = node_queue.front();
+		node_queue.pop_front();
+		right = node_queue.front();
+		node_queue.pop_front();
+		node = new Node(NULL, left, right);
+		if (!node_queue.empty()) {
+			node_queue.push_back(node);
+		}
+	}
+
 }
