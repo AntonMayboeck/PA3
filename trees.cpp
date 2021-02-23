@@ -26,7 +26,6 @@ Node::~Node() {
 }
 
 Node::encode() {
-	priority_queue<>;
 }
 
 Node::counter() {

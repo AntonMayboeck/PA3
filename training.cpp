@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <deque>
 
 #include "train.h"
@@ -13,6 +14,17 @@ DataClass::DataClass(int number, char letter) {
 ostream& operator<<(ostream& out, const DataClass* dc) {
 	if (dc != NULL) {
 		out << "{" << dc->number << ":" << dc->letter << "}";
+	}
+}
+Node::Node(DataClass* data, Node* right, Node* left) {
+	this->data = data;
+	this->right = right;
+	this->left = left;
+}
+
+ostream& operator<<(ostream& out, const DataClass* data) {
+	if (data != NULL) {
+		out << "{ " << data->chara << ": " << data->Number << " }";
 	}
 	return out;
 }
@@ -29,7 +41,19 @@ Node::~Node() {
 	delete right;
 }
 
+DataClass::DataClass(char chara, string Number) {
+	this->chara = chara;
+	this->Number = Number;
+}
+
+Node::~Node() {
+	delete right;
+	delete data;
+	delete left;
+}
+
 ostream& operator<<(ostream& out, const Node* node) {
+
 	if (node != NULL) {
 		out << node->left;
 		out << " " << node->data << " ";

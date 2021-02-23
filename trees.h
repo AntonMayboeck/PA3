@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string.h>
 #include <map>
-
 using namespace std;
 
 class DataClass {
@@ -25,6 +24,11 @@ public:
 private:
 	DataClass* data;
 	Node* left;
+
+
+private:
+	DataClass dc;
+	Node *left;
 	Node* right;
 
 };
