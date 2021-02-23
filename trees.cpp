@@ -2,6 +2,7 @@
 #include <deque>
 #include <string>
 #include <queue>
+#include <fstream>
 
 #include "trees.h"
 using namespace std;
@@ -57,7 +58,7 @@ Node::encode(Node *root, string str, map<chara, count> &dict) {
 
 }
 
-Node::encode(Node *node, int &index, string str) {
+Node::decode(Node *node, int &index, string str) {
 	if (root == nullptr) {
 		return;
 	}
@@ -76,7 +77,7 @@ Node::encode(Node *node, int &index, string str) {
 	}
 }
 
-Node::counter() {
+Node::counter(map<char, int> eva, string hello) {
 	for (int i = 0; i < hello.size(); i++) {
 		//map<char, int>::iterator it = eva.find(hello[i]);
 		if (hello[i] == '\n') {
@@ -100,5 +101,19 @@ Node::createHuffmann(string theText) {
 	priority_queue<Node*, vector<Node*>, compare > queue;
 
 
+	map<char, int> eva;
+	counter(eva, theText);
+
+
+	while (!node_queue.empty()) {
+		left = node_queue.front();
+		node_queue.pop_front();
+		right = node_queue.front();
+		node_queue.pop_front();
+		node = new Node(NULL, left, right);
+		if (!node_queue.empty()) {
+			node_queue.push_back(node);
+		}
+	}
 
 }

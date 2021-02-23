@@ -10,7 +10,8 @@ public:
 	void encode(Node* node, string str, map<char, int> &dict);
 	void decode(Node* node, int& index, string str);
 	void hasLeaf(Node *root);
-	void counter();
+	void counter(map<char, int> eva, string hello);
+
 
 private:
 	char chara;

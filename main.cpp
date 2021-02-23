@@ -15,8 +15,6 @@ int main() {
 	string hello((istreambuf_iterator<char>(os)),
 		(istreambuf_iterator<char>()));
 
-	map<char, char> eva;
-	eva['a'] = '4';
 	//call counter HERE!
 
 	//cout << hello;
@@ -24,7 +22,6 @@ int main() {
 	//for (const auto& p : eva) {
 	//	cout << p.first << ": " << p.second << endl; // "Karl", "George"
 	//}
-	string helo = "";
 
 
 }
