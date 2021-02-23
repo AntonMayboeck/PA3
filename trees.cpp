@@ -2,6 +2,7 @@
 #include <deque>
 #include <string>
 #include <queue>
+#include <fstream>
 
 #include "trees.h"
 using namespace std;
@@ -25,10 +26,21 @@ Node::~Node() {
 	delete right;
 }
 
-Node::encode() {
-}
+// Node::encode() {
+// }
 
-Node::counter() {
+Node::counter(map<char, int> eva, string hello) {
+
+	ifstream os;
+	int count = 0;
+
+	os.open("test.txt");
+	string hello((istreambuf_iterator<char>(os)),
+		(istreambuf_iterator<char>()));
+
+	map<char, int> eva;
+	//call counter HERE!
+
 	for (int i = 0; i < hello.size(); i++) {
 		//map<char, int>::iterator it = eva.find(hello[i]);
 		if (hello[i] == '\n') {

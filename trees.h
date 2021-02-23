@@ -18,7 +18,7 @@ public:
 	void encode();
 	void decode();
 	void hasLeaf();
-	void counter(map eva, string hello);
+	void counter(map<char, int> eva, string hello);
 
 
 private:
