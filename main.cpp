@@ -3,6 +3,8 @@
 #include <fstream>
 #include <map>
 
+#include "trees.h"
+
 using namespace std;
 
 int main() {
@@ -12,8 +14,10 @@ int main() {
 	os.open("test.txt");
 	string hello((istreambuf_iterator<char>(os)),
 		(istreambuf_iterator<char>()));
-	
+
 	map<char, int> eva;
+	//call counter HERE!
+
 
 	for (int i = 0; i < hello.size(); i++) {
 		//map<char, int>::iterator it = eva.find(hello[i]);
@@ -31,6 +35,5 @@ int main() {
 	//cout << count;
 	for (const auto& p : eva) {
 		cout << p.first << ": " << p.second << endl; // "Karl", "George"
-		
 	}
 }

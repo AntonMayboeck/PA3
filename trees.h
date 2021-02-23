@@ -1,14 +1,14 @@
 #include <iostream>
 #include <string.h>
-
+#include <map>
 using namespace std;
 
 class DataClass {
 public:
-	DataClass(char character, string BinaryNumer);
+	DataClass(char chara, string Numer);
 private:
-	char charachter;
-	string BinaryNumber;
+	char chara;
+	string Number;
 };
 
 class Node {
@@ -18,6 +18,12 @@ public:
 	void encode();
 	void decode();
 	void hasLeaf();
+	void counter(map eva, string hello);
+
+
+private:
+	DataClass* data;
+	Node* left;
 
 
 private:

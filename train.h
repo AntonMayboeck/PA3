@@ -1,29 +1,26 @@
 #include <iostream>
 #include <string.h>
-
 using namespace std;
 
 class DataClass {
 public:
-	DataClass(char chara, string Number);
+    DataClass(int number, char letter);
 
-	friend ostream& operator<<(ostream& out, const DataClass* Data);
+    friend ostream& operator<<(ostream& out, const DataClass* dc);
 
-
-private:
-	char chara;
-	string Number;
-}
+    int number;
+    char letter;
+};
 
 class Node {
 public:
-	Node(Dataclass* data, Node* left, Node* right);
-	virtual ~Node();
+    Node(DataClass* data = NULL, Node* left = NULL, Node* right = NULL);
+    virtual ~Node();
 
-	friend ostream& operator<<(ostream& out, const Node* Node);
+    friend ostream& operator<<(ostream& out, const Node* node);
 
 private:
-	DataClass* data;
-	Node* right;
-	Node* left;
-}
+    DataClass* data;
+    Node* left;
+    Node* right;
+};
