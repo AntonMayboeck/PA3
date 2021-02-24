@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 #include <unordered_map>
 #include <queue>
 
@@ -17,11 +17,11 @@ public:
 	bool hasLeaf(Node*);
 	void counter(unordered_map<char, int>, string);
 	void createHuffmann(string, string, string, char*, unordered_map<char, string>);
-	friend ostream& operator << (ostream& os, const priority_queue<Node*, vector<Node*>, compare> m)
-	{
-		os << m.top << endl;
-		return os;
-	}
+	// friend ostream& operator << (ostream& os, const priority_queue<Node*, vector<Node*>, compare> m)
+	// {
+	// 	os << m.top() << endl;
+	// 	return os;
+	// }
 	//void writeInFile(string fileName, template<typename T>);
 	int Number;
 	char chara;

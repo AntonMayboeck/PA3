@@ -109,7 +109,6 @@ void Node::createHuffmann(string theText, string fileName, string encoder, char*
 	string str = "";
 	cout << "I'm here 1" << endl;
 
-
 	if (theText == "") {
 		cout << "The File is empty!" << endl;
 	}
@@ -117,42 +116,48 @@ void Node::createHuffmann(string theText, string fileName, string encoder, char*
 	priority_queue<Node*, vector<Node*>, compare > node_queue;
 	cout << "I'm here 2" << endl;
 
-	unordered_map<char, int> eva;
-	counter(eva, theText);
+	//counter(eva, theText);
+	unordered_map<char, int> freq;
+	for (char ch: theText) {
+		if (freq[ch] == '\n') {
+			continue;
+		}
+		else {
+			freq[ch]++;
+		}
+    }
+	
+	for (const auto& p : freq) {
+		cout << p.first << ": " << p.second << endl;
+	}
 
 	cout << "I'm here 3" << endl;
-	for (auto pair : eva) {
-		
-		node_queue.push(createNewNode(pair.first, pair.second));
+	for (auto pair : freq) {
+		node_queue.push(createNewNode(pair.first, pair.second, nullptr, nullptr));
 	}
-	cout << "I'm here 4" << endl;
+
 	while (!node_queue.empty()) {
-		cout << "I'm here 44" << endl;
 		Node *left = node_queue.top();
 		node_queue.pop();
-		cout << "I'm here 444" << endl;
 		Node* right = node_queue.top();
 		node_queue.pop();
-		cout << "I'm here 4444" << endl;
-
 
 		sum = left->Number + right->Number;
 		//Node* node = new Node('\0', sum, left, right);
 		if (!node_queue.empty()) {
 			node_queue.push(createNewNode('\0', sum, left, right));
 		}
-		cout << "I'm here 44444" << endl;
 
 	}
-	while (!node_queue.empty()) {
-		cout << node_queue.top << endl;
-		node_queue.pop();
-	}
+	// while (!node_queue.empty()) {
+	// 	cout << node_queue.top() << endl;
+	// 	node_queue.pop();
+	// }
 	cout << "I'm here 5" << endl;
 	//cout << node_queue << endl;
 	
 	Node* root = node_queue.top();
-	cout << "goinf into encoder" << endl;
+	cout << "going into encoder" << endl;
 	//if (*command == 'e') {
 	encode(root, str, dict);
 		//writeInFile(fileName, dict);
@@ -171,6 +176,7 @@ void Node::createHuffmann(string theText, string fileName, string encoder, char*
 	}*/
 	cout << "going out of encode" << endl;
 }
+
 
 /*template <typename T>
 void writeInFile(string fileName, T ) {
