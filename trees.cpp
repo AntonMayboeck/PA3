@@ -3,10 +3,11 @@
 #include <string>
 #include <queue>
 #include <fstream>
-#include <unordered_map>
+#include <map>
 
 #include "trees.h"
 using namespace std;
+
 
 
 struct compare
@@ -16,24 +17,35 @@ struct compare
 	}
 };
 
-
 Node::Node(char character, int num, Node* left, Node* right) {
 	this->left = left;
 	this->right = right;
 	this->chara = character;
 	this->Number = num;
 }
-bool hasLeaf(Node *root) {
+bool Node::hasLeaf(Node *root) {
 	return root->left == nullptr && root->right == nullptr;
 }
 
+Node::Node(){}
 
 Node::~Node() {
 	delete left;
 	delete right;
 }
 
-void encode(Node *root, string str, unordered_map<char, string> &dict) {
+Node* Node::createNewNode(char ch, int freq, Node* left, Node* right){
+	Node* node = new Node();
+
+	node->chara = ch;
+	node->Number= freq;
+	node->left = left;
+	node->right = right;
+
+	return node;
+}
+
+void Node::encode(Node *root, string str, unordered_map<char, string> &dict) {
 
 	if (root == nullptr) {
 		return;
@@ -58,7 +70,7 @@ void encode(Node *root, string str, unordered_map<char, string> &dict) {
 
 }
 
-void decode(Node *node, int &index, string str) {
+void Node::decode(Node *node, int &index, string str) {
 	if (node == nullptr) {
 		return;
 	}
@@ -77,7 +89,7 @@ void decode(Node *node, int &index, string str) {
 	}
 }
 
-void counter(unordered_map<char, int> eva, string hello) {
+void Node::counter(unordered_map<char, int> eva, string hello) {
 	for (int i = 0; i < hello.size(); i++) {
 		//map<char, int>::iterator it = eva.find(hello[i]);
 		if (hello[i] == '\n') {
@@ -92,9 +104,10 @@ void counter(unordered_map<char, int> eva, string hello) {
 	}
 }
 
-void createHuffmann(string theText, string fileName, string encode, char command) {
+void Node::createHuffmann(string theText, string fileName, string encoder, char* command, unordered_map<char, string> dict) {
 	int sum = 0;
 	string str = "";
+	cout << "I'm here 1" << endl;
 
 
 	if (theText == "") {
@@ -102,56 +115,61 @@ void createHuffmann(string theText, string fileName, string encode, char command
 	}
 
 	priority_queue<Node*, vector<Node*>, compare > node_queue;
-
+	cout << "I'm here 2" << endl;
 
 	unordered_map<char, int> eva;
 	counter(eva, theText);
 
-
+	cout << "I'm here 3" << endl;
 	for (auto pair : eva) {
 		
-		node_queue.push(new Node(pair.first, pair.second));
+		node_queue.push(createNewNode(pair.first, pair.second));
 	}
-
+	cout << "I'm here 4" << endl;
 	while (!node_queue.empty()) {
-		
+		cout << "I'm here 44" << endl;
 		Node *left = node_queue.top();
 		node_queue.pop();
+		cout << "I'm here 444" << endl;
 		Node* right = node_queue.top();
 		node_queue.pop();
-		
+		cout << "I'm here 4444" << endl;
+
 
 		sum = left->Number + right->Number;
-		Node* node = new Node('\0', sum, left, right);
-		
+		//Node* node = new Node('\0', sum, left, right);
 		if (!node_queue.empty()) {
-			node_queue.push(node);
+			node_queue.push(createNewNode('\0', sum, left, right));
 		}
+		cout << "I'm here 44444" << endl;
 
 	}
-
+	while (!node_queue.empty()) {
+		cout << node_queue.top << endl;
+		node_queue.pop();
+	}
+	cout << "I'm here 5" << endl;
+	//cout << node_queue << endl;
+	
 	Node* root = node_queue.top();
-
-	if (command == 'e') {
-		ifstream stream(fileName);
-		unordered_map<char, string> dict;
-		encode(root, str, dict);
+	cout << "goinf into encoder" << endl;
+	//if (*command == 'e') {
+	encode(root, str, dict);
 		//writeInFile(fileName, dict);
-		for (char ch : theText) {
-			encode += dict[ch];
-		}
-		for (auto pair : dict) {
-			stream << pair.first << " " << pair.second << '\n';
-		}
-		//writeInFile()
+	for (char ch : theText) {
+	encoder += dict[ch];
 	}
-	if (command == 'd') {
+		//writeInFile()
+	cout << encoder;
+	//}
+	/*if (*command == 'd') {
 
 		int index = -1;
-		while (index < (int)encode.size() - 1) {
-			decode(root, index, encode);
+		while (index < (int)encoder.size() - 1) {
+			decode(root, index, encoder);
 		}
-	}
+	}*/
+	cout << "going out of encode" << endl;
 }
 
 /*template <typename T>
