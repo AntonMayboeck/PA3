@@ -1,34 +1,34 @@
 #include <iostream>
 #include <string.h>
-#include <map>
-using namespace std;
+#include <unordered_map>
+#include <queue>
 
-class DataClass {
-public:
-	DataClass(char chara, string Numer);
-private:
-	char chara;
-	string Number;
-};
+#pragma once
+using namespace std;
 
 class Node {
 public:
-	Node(DataClass* data = NULL, Node* left = NULL, Node* right = NULL);
+	Node(char chara, int Number, Node* left = NULL, Node* right = NULL);
+	Node();
 	virtual ~Node();
-	void encode();
-	void decode();
-	void hasLeaf();
-	void counter(map<char, int> eva, string hello);
-
-
-private:
-	DataClass* data;
+	Node* createNewNode(char ch, int freq, Node* left = NULL, Node* right = NULL);
+	void encode(Node*, string, unordered_map<char, string> &);
+	void decode(Node*, int&, string);
+	bool hasLeaf(Node*);
+	void counter(unordered_map<char, int>, string);
+	void createHuffmann(string, string, string, char*, unordered_map<char, string>);
+	friend ostream& operator << (ostream& os, const priority_queue<Node*, vector<Node*>, compare> m)
+	{
+		os << m.top << endl;
+		return os;
+	}
+	//void writeInFile(string fileName, template<typename T>);
+	int Number;
+	char chara;
 	Node* left;
-
+	Node* right;
 
 private:
-	DataClass dc;
-	Node *left;
-	Node* right;
+
 
 };
