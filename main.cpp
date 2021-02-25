@@ -14,10 +14,12 @@ int main(int argc, char*argv[]) {
 	ifstream os;
 	int count = 0;
 	unordered_map<char, string> dict;
+	string encode;
+	
 	char* command = argv[1];
 	string openFile = argv[2];
 	string fileName = argv[3];
-	string encode;
+	
 
 	os.open(openFile, ios::in);
 	string str((istreambuf_iterator<char>(os)),
