@@ -53,8 +53,12 @@ void Node::encode(Node *root, string str, unordered_map<char, string> &dict) {
 		}
 		
 	}
-	encode(root->left, str + '1', dict);
-	encode(root->right, str + '0', dict);
+	if(root->left != nullptr){
+		encode(root->left, str + '1', dict);
+	}
+	if(root->right != nullptr){
+		encode(root->right, str + '0', dict);
+	}
 }
 
 void Node::decode(Node *node, int &index, string str, string fileName) {
@@ -107,13 +111,8 @@ void Node::createHuffmann(string theText, string fileName, string encoder, char*
 	for (char ch: theText) {
 		eva[ch]++;
     }
-	cout << "eva: " << endl; 
-	for (const auto& p : eva) {
-		cout << p.first << ": " << p.second << endl;
-	}
 
 	for (auto pair : eva) {
-		cout << pair.first << ": " << pair.second << endl;
 		node_queue.push(createNewNode(pair.first, pair.second));
 	}
 
@@ -130,21 +129,24 @@ void Node::createHuffmann(string theText, string fileName, string encoder, char*
 		}
 
 	}
-	fout.open(fileName, ios::out);
 	Node* root = node_queue.top();
-	encode(root, str, dict);
-	for (const auto& p : dict) {
-		cout << p.first << ": " << p.second << endl;
-	}
-	for (char ch : theText) {
+	fout.open(fileName, ios::out);
+	if(*command == 'e'){
+		encode(root, str, dict);
+		for (char ch : theText) {
 		encoder += dict[ch];
+		}
+		fout << encoder;
+		fout.close();
 	}
-	fout << encoder;
-	fout.close();
-	int index = -1;
-	while (index < (int)encoder.size() - 1) {
+	else{
+		int index = -1;
+		while (index < (int)encoder.size() - 1) {
 		decode(root, index, encoder, fileName);
+		}
 	}
+
+
 
 }
 
