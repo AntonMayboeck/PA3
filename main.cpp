@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <map>
+#include <algorithm>
 
 #include "trees.h"
 #include "trees.cpp"
@@ -18,11 +19,14 @@ int main(int argc, char*argv[]) {
 	string fileName = argv[3];
 	string encode;
 
-	os.open(openFile);
-	string theText((istreambuf_iterator<char>(os)),
+	os.open(openFile, ios::in);
+	string str((istreambuf_iterator<char>(os)),
 		(istreambuf_iterator<char>()));
+	os.close();
+	str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+	
 	cout << "createHuffmann" << endl;
-	node.createHuffmann(theText, fileName, encode, command, dict);
+	node.createHuffmann(str, fileName, encode, command, dict);
 	cout << "going out of createHuffmann" << endl;
 	//call counter HERE!
 	/*std::ifstream stream(fileName);

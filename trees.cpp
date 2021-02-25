@@ -61,12 +61,8 @@ void Node::encode(Node *root, string str, unordered_map<char, string> &dict) {
 		
 	}
 
-	if (root->left != nullptr) {
-		encode(root->left, str + '0', dict);
-	}
-	if (root->right != nullptr) {
-		encode(root->right, str + '0', dict);
-	}
+	encode(root->left, str + '0', dict);
+	encode(root->right, str + '1', dict);
 
 }
 
@@ -76,7 +72,7 @@ void Node::decode(Node *node, int &index, string str) {
 	}
 
 	if (hasLeaf(node)) {
-		cout << node->chara << endl;
+		cout << node->chara;
 
 	}
 	index++;
@@ -162,7 +158,7 @@ void Node::createHuffmann(string theText, string fileName, string encoder, char*
 	encode(root, str, dict);
 		//writeInFile(fileName, dict);
 	for (char ch : theText) {
-	encoder += dict[ch];
+		encoder += dict[ch];
 	}
 		//writeInFile()
 	cout << encoder;
@@ -175,6 +171,10 @@ void Node::createHuffmann(string theText, string fileName, string encoder, char*
 		}
 	}*/
 	cout << "going out of encode" << endl;
+	int index = -1;
+	while (index < (int)encoder.size() - 1) {
+		decode(root, index, encoder);
+	}
 }
 
 
