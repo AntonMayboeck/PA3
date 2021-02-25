@@ -13,7 +13,7 @@ public:
 	virtual ~Node();
 	Node* createNewNode(char ch, int freq, Node* left = NULL, Node* right = NULL);
 	void encode(Node*, string, unordered_map<char, string> &);
-	void decode(Node*, int&, string);
+	void decode(Node*, int&, string, string);
 	bool hasLeaf(Node*);
 	void counter(unordered_map<char, int>, string);
 	void createHuffmann(string, string, string, char*, unordered_map<char, string>);

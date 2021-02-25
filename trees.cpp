@@ -8,8 +8,6 @@
 #include "trees.h"
 using namespace std;
 
-
-
 struct compare
 {
 	bool operator()(Node *left, Node* right){
@@ -46,46 +44,36 @@ Node* Node::createNewNode(char ch, int freq, Node* left, Node* right){
 }
 
 void Node::encode(Node *root, string str, unordered_map<char, string> &dict) {
-
 	if (root == nullptr) {
 		return;
 	}
-
 	if (hasLeaf(root)) {
-		if (str == "") {
-			dict[root->chara] = '1';
-		}
-		else {
-			dict[root->chara] = str;
+		if(str != "\n"){
+			dict[root->chara] = (str != "") ? str : "1";
 		}
 		
 	}
-
-	if (root->left != nullptr) {
-		encode(root->left, str + '0', dict);
-	}
-	if (root->right != nullptr) {
-		encode(root->right, str + '0', dict);
-	}
-
+	encode(root->left, str + '1', dict);
+	encode(root->right, str + '0', dict);
 }
 
-void Node::decode(Node *node, int &index, string str) {
+void Node::decode(Node *node, int &index, string str, string fileName) {
+	ofstream f;
 	if (node == nullptr) {
 		return;
 	}
-
+	f.open(fileName, ios::out);
 	if (hasLeaf(node)) {
-		cout << node->chara << endl;
+		f << node->chara;
 
 	}
+	f.close();
 	index++;
-
 	if (str[index] == '0') {
-		decode(node->left, index, str);
+		decode(node->left, index, str, fileName);
 	}
 	else {
-		decode(node->right, index, str);
+		decode(node->right, index, str, fileName);
 	}
 }
 
@@ -106,34 +94,27 @@ void Node::counter(unordered_map<char, int> eva, string hello) {
 
 void Node::createHuffmann(string theText, string fileName, string encoder, char* command, unordered_map<char, string> dict) {
 	int sum = 0;
+	ofstream fout;
 	string str = "";
-	cout << "I'm here 1" << endl;
-
 	if (theText == "") {
 		cout << "The File is empty!" << endl;
 	}
 
 	priority_queue<Node*, vector<Node*>, compare > node_queue;
-	cout << "I'm here 2" << endl;
 
+	unordered_map<char, int> eva;
 	//counter(eva, theText);
-	unordered_map<char, int> freq;
 	for (char ch: theText) {
-		if (freq[ch] == '\n') {
-			continue;
-		}
-		else {
-			freq[ch]++;
-		}
+		eva[ch]++;
     }
-	
-	for (const auto& p : freq) {
+	cout << "eva: " << endl; 
+	for (const auto& p : eva) {
 		cout << p.first << ": " << p.second << endl;
 	}
 
-	cout << "I'm here 3" << endl;
-	for (auto pair : freq) {
-		node_queue.push(createNewNode(pair.first, pair.second, nullptr, nullptr));
+	for (auto pair : eva) {
+		cout << pair.first << ": " << pair.second << endl;
+		node_queue.push(createNewNode(pair.first, pair.second));
 	}
 
 	while (!node_queue.empty()) {
@@ -149,32 +130,22 @@ void Node::createHuffmann(string theText, string fileName, string encoder, char*
 		}
 
 	}
-	// while (!node_queue.empty()) {
-	// 	cout << node_queue.top() << endl;
-	// 	node_queue.pop();
-	// }
-	cout << "I'm here 5" << endl;
-	//cout << node_queue << endl;
-	
+	fout.open(fileName, ios::out);
 	Node* root = node_queue.top();
-	cout << "going into encoder" << endl;
-	//if (*command == 'e') {
 	encode(root, str, dict);
-		//writeInFile(fileName, dict);
-	for (char ch : theText) {
-	encoder += dict[ch];
+	for (const auto& p : dict) {
+		cout << p.first << ": " << p.second << endl;
 	}
-		//writeInFile()
-	cout << encoder;
-	//}
-	/*if (*command == 'd') {
+	for (char ch : theText) {
+		encoder += dict[ch];
+	}
+	fout << encoder;
+	fout.close();
+	int index = -1;
+	while (index < (int)encoder.size() - 1) {
+		decode(root, index, encoder, fileName);
+	}
 
-		int index = -1;
-		while (index < (int)encoder.size() - 1) {
-			decode(root, index, encoder);
-		}
-	}*/
-	cout << "going out of encode" << endl;
 }
 
 
